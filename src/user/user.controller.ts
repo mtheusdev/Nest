@@ -14,6 +14,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdatePartialUserDto } from './dto/update-partial.dto';
 import { UserService } from './user.service';
+import { ParamId } from 'src/decorators/param-id.decorator';
 // import { LogInterceptor } from 'src/interceptors/log.interceptor';
 
 // @UseInterceptors(LogInterceptor)
@@ -33,25 +34,22 @@ export class UserController {
   }
 
   @Get(':id')
-  async find(@Param('id', ParseIntPipe) id) {
+  async find(@ParamId() id: number) {
     return await this.userService.find(id);
   }
 
   @Put(':id')
-  async update(@Param('id', ParseIntPipe) id, @Body() body: UpdateUserDto) {
+  async update(@ParamId() id: number, @Body() body: UpdateUserDto) {
     return await this.userService.update(id, body);
   }
 
   @Patch(':id')
-  async patch(
-    @Param('id', ParseIntPipe) id,
-    @Body() body: UpdatePartialUserDto,
-  ) {
+  async patch(@ParamId() id: number, @Body() body: UpdatePartialUserDto) {
     return await this.userService.updatePartial(id, body);
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id) {
+  async delete(@ParamId() id: number) {
     return await this.userService.delete(id);
   }
 }
